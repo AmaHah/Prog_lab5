@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+compileJava.options.encoding = 'utf-8' // устанавливает кодировку для компилируемого кода
+javadoc.options.encoding = 'utf-8' // устанавливает кодировку для генерируемой документации
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'utf-8'
+}
+
+
+//dependencies {
+//    implementation group: 'com.opencsv', name: 'opencsv', version: '5.7.0'
+//}
+
+apply plugin: 'groovy'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    // custom config of files we want to include in our fat jar that we send to hadoop
+    includeInJar
+}
+
+dependencies {
+    includeInJar 'com.opencsv:opencsv:5.7.1'
+
+    configurations.implementation.extendsFrom(configurations.includeInJar)
+}
+
+jar {
+    into('lib') {
+        println "includeInJar: " + configurations.includeInJar.collect { File file -> file }
+        from configurations.includeInJar
+    }
+    manifest {
+        attributes(
+                'Class-Path': configurations.runtimeClasspath.collect { it.getAbsolutePath() }.join(' '),
+                'Main-Class': 'Main.Main'
+        )
+    }
+}

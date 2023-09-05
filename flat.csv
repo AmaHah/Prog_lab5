@@ -1,0 +1,5 @@
+id,name,x,y,creationdate,area,numberOfRooms,floor,numberOfBathrooms,transport,housename,year,numberOfLifts
+1,1,1,1.0,05/09/2023 - 18:59:27,1.0,1,1,1,NONE,1,1,1
+2,1,1,1.0,05/09/2023 - 19:00:01,1.0,1,1,1,NONE,1,1,1
+4,4,4,4.0,05/09/2023 - 19:01:53,4.0,4,4,4,ENOUGH,4,4,4
+3,1,1,1.0,05/09/2023 - 21:10:45,1.0,1,1,1,NONE,1,1,1
