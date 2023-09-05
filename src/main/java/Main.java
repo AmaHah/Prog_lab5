@@ -1,5 +1,3 @@
-package Main;
-
 import Model.IModel;
 import Model.CSVModel;
 import Presenter.CommandsPresenter;

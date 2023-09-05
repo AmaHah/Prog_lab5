@@ -70,7 +70,7 @@ public class AddCommand implements ICommand {
 
     @Override
     public String getDescription() {
-        return "HUY[хуйхуйхуй";
+        return "добавить новый элемент в коллекцию";
     }
 
     @Override
