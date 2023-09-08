@@ -6,7 +6,9 @@ import Model.Exceptions.UserInputException;
  * Координаты
  */
 public class Coordinates implements Comparable<Coordinates>{
+    /** Поле координата X */
     private Integer x;
+    /** Поле координата Y */
     private Double y; //Поле не может быть null
 
     /**

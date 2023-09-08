@@ -4,8 +4,11 @@ import Model.Exceptions.UserInputException;
 
 
 public class House implements Comparable<House>{
+    /** Поле название дома */
     private String name; //Поле может быть null
+    /** Поле возраст дома */
     private long year; //Максимальное значение поля: 307, Значение поля должно быть больше 0
+    /** Поле количество лифтов */
     private Integer numberOfLifts; //Значение поля должно быть больше 0
 
 
@@ -63,7 +66,7 @@ public class House implements Comparable<House>{
     }
 
     /**
-     * Сравнить два дома по году постройки, если один год, то по количеству лифтов в домах
+     * Сравнить два дома по возрасту, если одинаково, то по количеству лифтов в домах
      */
     @Override
     public int compareTo(House o) {

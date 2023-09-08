@@ -17,9 +17,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
-/**
- * Модель данных для их хранения в одном файле JSON
- */
 public class CSVModel implements IModel {
 
     private IPresenter presenter;
@@ -30,13 +27,16 @@ public class CSVModel implements IModel {
 
     /**
      *
-     * @param presenter Предсавление, которое можно присоединить к модели
+     * @param presenter Представление, которое можно присоединить к модели
      */
     public CSVModel(IPresenter presenter) {
         this.presenter = presenter;
     }
 
-
+    /**
+     * Загружает коллекцию из файла CSV
+     * @return возвращает Flat[] с элементами из файла
+     */
     @Override
     public Flat[] loadData() throws LoadFailedException {
         List<Flat> result = new ArrayList<Flat>();
@@ -65,6 +65,11 @@ public class CSVModel implements IModel {
         return result.toArray(new Flat[result.size()]);
     }
 
+    /**
+     * Формирует строку для записи коллекции в файл
+     * @param data Набор данных из объектов Flat
+     * @throws SaveFailedException
+     */
     @Override
     public String saveData(Flat[] data) throws SaveFailedException {
         StringBuilder result = new StringBuilder();
@@ -78,6 +83,11 @@ public class CSVModel implements IModel {
         return getFilePath();
     }
 
+    /**
+     * Записывает Flat в строку в csv формате
+     * @param flat элемент коллекции
+     * @return строку csv
+     */
     private String convertToСSV(Flat flat) {
         StringBuilder result = new StringBuilder();
         result.append(flat.getId()).append(',');
@@ -97,6 +107,17 @@ public class CSVModel implements IModel {
         return result.toString();
     }
 
+    /**
+     * Парсит строку во Flat
+     * @param flatData
+     * @return
+     * @throws IllegalArgumentException
+     * @throws DateTimeParseException
+     * @throws ValidationFailedException
+     * @throws BadIdException
+     * @throws UserInputException
+     * @throws NumberFormatException
+     */
     private Flat parseCsvLine(String[] flatData) throws IllegalArgumentException, DateTimeParseException, ValidationFailedException, BadIdException, UserInputException, NumberFormatException {
         Long id = Long.parseLong(flatData[0]);
         String name = flatData[1];
@@ -120,6 +141,11 @@ public class CSVModel implements IModel {
         return parsedObj;
     }
 
+    /**
+     * Читает файл построчно
+     * @return возвращает строку
+     * @throws LoadFailedException
+     */
     private String readCSV() throws LoadFailedException {
         try {
             Scanner sc = new Scanner(getFileForReading());
@@ -135,6 +161,11 @@ public class CSVModel implements IModel {
         }
     }
 
+    /**
+     * Записывает коллекцию в CSV файл
+     * @param CSVData коллекция в csv формате
+     * @throws SaveFailedException
+     */
     private void writeCSV(String CSVData) throws SaveFailedException {
         try {
             OutputStreamWriter fs = new OutputStreamWriter(new FileOutputStream(getFileForWriting()));
@@ -147,6 +178,10 @@ public class CSVModel implements IModel {
         }
     }
 
+    /**
+     * Получает путь к файлу
+     * @return возвращает путь
+     */
     private String getFilePath() {
         String ENV_VAR = "LAB5_DATA_PATH";
         String result = System.getenv(ENV_VAR);
@@ -156,6 +191,11 @@ public class CSVModel implements IModel {
         return result;
     }
 
+    /**
+     * Проверяет возможность чтения файла
+     * @return File, для чтения
+     * @throws LoadFailedException
+     */
     private File getFileForReading() throws LoadFailedException {
         File f = new File(getFilePath());
         if (!f.exists() | !f.isFile())
@@ -165,6 +205,11 @@ public class CSVModel implements IModel {
         return f;
     }
 
+    /**
+     * Проверяет возможность записи в файл
+     * @return File для записи
+     * @throws FileNotFoundException
+     */
     private File getFileForWriting() throws FileNotFoundException {
         File f = new File(getFilePath());
         if (!f.exists() | !f.isFile())
