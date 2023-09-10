@@ -50,8 +50,9 @@ public class CSVModel implements IModel {
             while ((lineInArray = reader.readNext()) != null) {
                 if (isHeader) {
                     isHeader = false;
+                    String test = Arrays.toString(lineInArray).trim().replaceAll("[\\[\\]]", "").replace(", ", ",");
                     if (!Arrays.toString(lineInArray).trim().replaceAll("[\\[\\]]", "").replace(", ", ",").
-                            equals("i,name,x,y,creationdate,area,numberOfRooms,floor,numberOfBathrooms,transport,housename,year,numberOfLifts")
+                            equals("id,name,x,y,creationdate,area,numberOfRooms,floor,numberOfBathrooms,transport,housename,year,numberOfLifts")
                     )
                         throw new LoadFailedException("");
                     continue;
